@@ -2,7 +2,7 @@ class Agenda extends React.Component {
   render() {
     const contatos = this._getContatos();
 
-    if (contatos.length == 0){
+    if (contatos.length == 0) {
       return (<p><i className="fas fa-exclamation-circle"></i> Nenhum contato disponível</p>);
     } else {
       return (
@@ -29,19 +29,22 @@ class Agenda extends React.Component {
         "id": "1",
         "number": ['997832836', '34934632'],
         "nome": "Tarcísio Deschamps",
-        "email": "tardchamps94@gmail.com"
+        "email": "tardchamps94@gmail.com",
+        "endereco": "Rua canela"
       },
       {
         "id": "2",
         "number": ['997832836', '34934632'],
         "nome": "Mayra Oliveira",
-        "email": "mayra@gmail.com"
+        "email": "mayra@gmail.com",
+        "endereco": "Rua Arthur Barreto Lins"
       },
       {
         "id": "3",
         "number": ['9978322222'],
         "nome": "Livya K. Menezes",
-        "email": "livya@accenture.com"
+        "email": "livya@accenture.com",
+        "endereco": "Av. Norte"
       }
     ];
 
@@ -52,10 +55,34 @@ class Agenda extends React.Component {
 }
 
 class Contatos extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      showDetalheContato : false
+    };
+  }
   render() {
+    let detalheContato;
+    if (this.state.showDetalheContato) {
+      detalheContato =
+        <div>
+          <p className="m-0"><strong>Email: </strong> {this.props.contato.email}</p>
+          <p className="m-0"><strong>Endereço: </strong> {this.props.contato.endereco}</p>
+        </div>;
+    }
     return (
-      <li className="list-group-item d-flex justify-content-between align-items-center">{this.props.contato.nome}  <strong className="badge badge-primary badge-pill">{this.props.contato.number.length}</strong> </li>
+      <li className="list-group-item list-group-item-action" onClick={this._exibeDetalheContato.bind(this)}>
+        <div className="w-100 d-flex justify-content-between align-items-center">
+          {this.props.contato.nome}  <strong className="badge badge-primary badge-pill">{this.props.contato.number.length}</strong>
+        </div>
+        {detalheContato}
+      </li>
     );
+  }
+
+  _exibeDetalheContato(){
+    this.setState({showDetalheContato: !this.state.showDetalheContato});
   }
 }
 
